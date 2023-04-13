@@ -1,0 +1,96 @@
+dataSources:
+  ds_1:
+    dataSourceClassName: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url:
+    username:
+    password:
+    initial-size: 5
+    max-active: 20
+    min-idle: 5
+    max-wait: 60000
+    test-while-idle: true
+    validation-query: SELECT 1
+    db-type: mysql
+    test-on-borrow: true
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 30000
+    max-pool-prepared-statement-per-connection-size: 20
+    pool-prepared-statements: true
+    connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    use-global-data-source-stat: true
+    keep-alive: true
+    filter:
+      wall:
+        db-type: mysql
+        enable:
+          true
+  ds_2:
+    dataSourceClassName: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url:
+    username:
+    password:
+    initial-size: 5
+    max-active: 20
+    min-idle: 5
+    max-wait: 60000
+    test-while-idle: true
+    validation-query: SELECT 1
+    db-type: mysql
+    test-on-borrow: true
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 30000
+    max-pool-prepared-statement-per-connection-size: 20
+    pool-prepared-statements: true
+    connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    use-global-data-source-stat: true
+    keep-alive: true
+    filter:
+      wall:
+        db-type: mysql
+        enable:
+          true
+  ds_3:
+    dataSourceClassName: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url:
+    username:
+    password:
+    initial-size: 5
+    max-active: 20
+    min-idle: 5
+    max-wait: 60000
+    test-while-idle: true
+    validation-query: SELECT 1
+    db-type: mysql
+    test-on-borrow: true
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 30000
+    max-pool-prepared-statement-per-connection-size: 20
+    pool-prepared-statements: true
+    connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    use-global-data-source-stat: true
+    keep-alive: true
+    filter:
+      wall:
+        db-type: mysql
+        enable:
+          true
+
+rules:
+  - !READWRITE_SPLITTING
+    dataSources:
+      readwrite_ds:
+        staticStrategy:
+          writeDataSourceName: ds_1
+          readDataSourceNames:
+            - ds_2
+            - ds_3
+        loadBalancerName: random
+    loadBalancers:
+      random:
+        type: RANDOM
+
+props:
+  sql-show: true
